@@ -1,4 +1,5 @@
 
+const apiKey = '21697918-6e31458764a1a6acf0f5f3f6d';
 
 export default class ApiService{
     constructor() {
@@ -8,7 +9,7 @@ export default class ApiService{
     
     fetchImages() {
         // console.log(this)
-        let apiKey = '21697918-6e31458764a1a6acf0f5f3f6d';
+        
         const url =`https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=`
 
         return fetch(`${url}${apiKey}`)

@@ -6,7 +6,8 @@ import ApiService from './apiService'
 
 const refs = {
     searchInput: document.querySelector('.search-form'),
-    loadMoreBtn: document.querySelector('[data-action="load-more"]')
+    loadMoreBtn: document.querySelector('[data-action="load-more"]'),
+    imgsList: document.querySelector('.gallery')
 
 }
 const apiService = new ApiService();
@@ -17,24 +18,41 @@ refs.loadMoreBtn.addEventListener('click',onLoadMore)
 
 
 
+
 function onSearch(e) {
     e.preventDefault()
     
 
-apiService.query = e.currentTarget.elements.query.value;
-    // console.log(searchQery)
+    apiService.query = e.currentTarget.elements.query.value;
+
+    //  забороняє пошук на пустий Input чи на пробіл 
+    // if (e.currentTarget.elements.query.value[0] === ' '
+    //     || e.currentTarget.elements.query.value === '') {
+      
+    //    return alert('ha-ha')
+    // }
+
+
+    
     apiService.resetPage()
-    apiService.fetchImages().then(hits=>console.log(hits))
+    apiService.fetchImages().then(hits => {
+        clearImgsMarkup();
+        appendImgsMarkup(hits)
+    })
 
 };
 
 
-function onLoadMore(params) {
+function onLoadMore() {
       
-  apiService.fetchImages().then(hits=>console.log(hits))
+  apiService.fetchImages().then(appendImgsMarkup)
 
 }
 
 function appendImgsMarkup(hits) {
-    refs.
+    refs.imgsList.insertAdjacentHTML('beforeend',imgsTmpl(hits))
+}
+function clearImgsMarkup() {
+    refs.imgsList.innerHTML = '';
+    
 }
