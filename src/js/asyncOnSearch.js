@@ -42,22 +42,27 @@ refs.loadMoreBtn.addEventListener('click',onLoadMore)
      apiService.resetPage()
 
      const result = await apiService.fetchImages(apiService.searchQuery)
-     console.log(result)
+    //  console.log(result)
+     if (result.length === 0) {
+          notice({
+              text: `'${apiService.searchQuery}' not found!
+            Please enter valid name`
+       })   
+     }
      try {
         clearImgsMarkup();
          appendImgsMarkup(result)
           window.scrollTo({
-  top: 50,
+  top: 150,
   behavior: 'smooth'
 });   
     
-     } catch {
-          notice({
+     } catch (error) {
+         notice({
            text: 'Please,enter valid name'
-       })   
-    
+       })
+          
 }
-    
 
 };
 
@@ -65,9 +70,12 @@ refs.loadMoreBtn.addEventListener('click',onLoadMore)
 async function onLoadMore() {
     const result = await apiService.fetchImages(apiService.searchQuery);
 try {
-    appendImgsMarkup(result) 
+    appendImgsMarkup(result)
+    
 } catch (error) {
-    console.log(error)
+    notice({
+        text: 'Please,enter valid name'
+    })
 }
  
 }

@@ -48,6 +48,7 @@ body {
   border-radius: 20px;
   box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  transition: transform 0.25s ease-in-out;
 }
 
 .gallery-image {
@@ -59,6 +60,7 @@ body {
 }
 .photo-card:hover {
   transform: scale(1.1);
+  box-shadow: 0.4rem 0.6rem 0.6rem rgba(0, 0, 0, 0.4);
 }
 
 @supports (display: grid) {
@@ -93,7 +95,7 @@ input {
   font-family: 'Roboto', sans-serif;
   color: #333;
   font-size: 1.2rem;
-  margin: 100px auto;
+  margin: 50px auto;
   padding: 1.5rem 2rem;
 
   border-radius: 0.2rem;
