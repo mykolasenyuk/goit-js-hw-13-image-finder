@@ -24,7 +24,7 @@ refs.loadMoreBtn.addEventListener('click',onLoadMore)
 
 
 
-function onSearch(e) {
+ async function onSearch(e) {
     e.preventDefault()
      clearImgsMarkup();
 
@@ -37,38 +37,44 @@ function onSearch(e) {
      
        return   notice({
            text: 'Please,enter valid name'
-       })
-       
-    }
+       })   
+     }
+     apiService.resetPage()
 
-    apiService.resetPage()
-    apiService.fetchImages().then(hits => {
+     const result = await apiService.fetchImages(apiService.searchQuery)
+     console.log(result)
+     try {
         clearImgsMarkup();
-        appendImgsMarkup(hits)
-    })
+         appendImgsMarkup(result)
+          window.scrollTo({
+  top: 50,
+  behavior: 'smooth'
+});   
+    
+     } catch {
+          notice({
+           text: 'Please,enter valid name'
+       })   
+    
+}
+    
 
 };
 
-//     window.scrollTo({
-//   top: window.innerHeight,
-//   behavior: 'smooth'
-// });
-function onLoadMore() {
-   
-    apiService.fetchImages().then(appendImgsMarkup);
 
-        window.scrollTo({
-  top: document.documentElement.scrollHeight,
-  behavior: 'smooth'
-});
-
+async function onLoadMore() {
+    const result = await apiService.fetchImages(apiService.searchQuery);
+try {
+    appendImgsMarkup(result) 
+} catch (error) {
+    console.log(error)
+}
+ 
 }
 
 function appendImgsMarkup(hits) {
     refs.imgsList.insertAdjacentHTML('beforeend', imgsTmpl(hits))
     
-
-// instance.show()
 }
 
 function clearImgsMarkup() {
