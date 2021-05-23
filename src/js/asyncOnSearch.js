@@ -17,7 +17,7 @@ const refs = {
 }
 const loadMoreBtn = new LoadMoreBtn({
     selector: '[data-action="load-more"]',
-    // hidden: true
+    hidden: true
 })
 // console.log(loadMoreBtn)
 const apiService = new ApiService();
@@ -26,8 +26,8 @@ const apiService = new ApiService();
 refs.searchInput.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click',onLoadMore)
 // refs.loadMoreBtn.addEventListener('click',onLoadMore)
-loadMoreBtn.show()
-loadMoreBtn.disable()
+// loadMoreBtn.show()
+// loadMoreBtn.disable()
 
  async function onSearch(e) {
     e.preventDefault()
@@ -45,16 +45,22 @@ loadMoreBtn.disable()
      }
 
      apiService.resetPage()
-      loadMoreBtn.show()
-         loadMoreBtn.disable()
+      
 
      const result = await apiService.fetchImages(apiService.searchQuery)
     
      if (result.length === 0) {
-          error({
-              text: `'${apiService.searchQuery}' not found!
+         
+         error({
+             text: `'${apiService.searchQuery}' not found!
             Please enter valid name`
-       })   
+              
+         });
+         loadMoreBtn.hide()
+     }
+     else {
+         loadMoreBtn.show()
+         loadMoreBtn.disable()
      }
      try {
         
