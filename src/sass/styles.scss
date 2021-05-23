@@ -108,9 +108,23 @@ input {
 
 // button
 .button {
+  position: relative;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: inset -2px -1px 6px -40px #23395e;
+  background: linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+  background-color: #2e466e;
+  border-radius: 42px;
+  border: 2px solid #1f2f47;
+
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 17px;
+  padding: 9px 51px;
+  text-decoration: none;
+  text-shadow: -1px 2px 7px #263666;
 }
 
 .button.is-hidden {
@@ -119,4 +133,27 @@ input {
 
 .button > .spinner.is-hidden {
   display: none;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: rgb(177, 29, 127);
+  border-bottom-color: #07d;
+  animation: spinner 0.8s ease infinite;
 }
