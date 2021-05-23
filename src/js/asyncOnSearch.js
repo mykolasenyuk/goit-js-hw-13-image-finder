@@ -1,7 +1,7 @@
 
 import imgsTmpl from '../templates/imagesCard.hbs'
 // import ApiService from './apiService';
-import ApiService from './pictures';
+import ApiService from './asyncApi';
 import { error, notice } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
@@ -44,7 +44,7 @@ refs.loadMoreBtn.addEventListener('click',onLoadMore)
      const result = await apiService.fetchImages(apiService.searchQuery)
     //  console.log(result)
      if (result.length === 0) {
-          notice({
+          error({
               text: `'${apiService.searchQuery}' not found!
             Please enter valid name`
        })   

@@ -1,7 +1,7 @@
 
 import imgsTmpl from '../templates/imagesCard.hbs'
 // import ApiService from './apiService';
-import ApiService from './pictures';
+import ApiService from './asyncApi';
 import { error, notice } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
