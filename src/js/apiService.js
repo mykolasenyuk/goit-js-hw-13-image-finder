@@ -20,17 +20,16 @@ export default class ApiService{
             .then(response => response.json())
             .then(data => {
                 this.incrementPage()
-console.log(data)
+
                 return data.hits;
-                
             });
     }
 
-  get query() {
+   get query() {
         return this.searchQuery
     }
 
-    set query(newQuery) {
+   set query(newQuery) {
         this.searchQuery = newQuery  
     }
 
@@ -40,5 +39,4 @@ console.log(data)
     resetPage() {
         this.page=1
     }
-
-}
+};

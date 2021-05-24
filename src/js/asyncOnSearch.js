@@ -2,7 +2,7 @@
 import imgsTmpl from '../templates/imagesCard.hbs'
 // import ApiService from './apiService';
 import ApiService from './asyncApi';
-import { error, notice } from '@pnotify/core';
+import { error, notice} from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
 import * as basicLightbox from 'basiclightbox'
@@ -18,16 +18,13 @@ const refs = {
 const loadMoreBtn = new LoadMoreBtn({
     selector: '[data-action="load-more"]',
     hidden: true
-})
-// console.log(loadMoreBtn)
-const apiService = new ApiService();
-// console.log(apiService)
-
+});
 refs.searchInput.addEventListener('submit', onSearch);
-loadMoreBtn.refs.button.addEventListener('click',onLoadMore)
-// refs.loadMoreBtn.addEventListener('click',onLoadMore)
-// loadMoreBtn.show()
-// loadMoreBtn.disable()
+loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
+
+const apiService = new ApiService();
+
+
 
  async function onSearch(e) {
     e.preventDefault()
@@ -41,35 +38,34 @@ loadMoreBtn.refs.button.addEventListener('click',onLoadMore)
         || e.currentTarget.elements.query.value === '') {
        return   notice({
            text: 'Please,enter valid name'
-       })   
+       })
+      
      }
-
      apiService.resetPage()
       
-
      const result = await apiService.fetchImages(apiService.searchQuery)
     
      if (result.length === 0) {
-         
          error({
              text: `'${apiService.searchQuery}' not found!
-            Please enter valid name`
-              
+            Please enter valid name`  
          });
+
          loadMoreBtn.hide()
      }
      else {
          loadMoreBtn.show()
          loadMoreBtn.disable()
-     }
+     };
+
      try {
-        
          clearImgsMarkup();
          appendImgsMarkup(result);
-         loadMoreBtn.enable()
-          window.scrollTo({
-  top: 150,
-  behavior: 'smooth'
+         loadMoreBtn.enable();
+
+           window.scrollTo({
+          top: 150,
+                behavior: 'smooth'
 });   
      } catch (error) {
          notice({
@@ -83,8 +79,19 @@ async function onLoadMore() {
     loadMoreBtn.disable();
     const result = await apiService.fetchImages(apiService.searchQuery);
 try {
-    appendImgsMarkup(result);
-    loadMoreBtn.enable();
+    
+    setTimeout(() => {
+        loadMoreBtn.enable();
+        appendImgsMarkup(result);
+
+        const display = document.documentElement.offsetHeight;
+        
+       window.scrollTo({
+            top: display,
+            behavior: 'smooth',  
+        })
+           
+       }, 1000);
     
 } catch (error) {
     notice({
@@ -101,7 +108,3 @@ function clearImgsMarkup() {
     refs.imgsList.innerHTML = '';  
 };
 
-
-// const instance = basicLightbox.create(`
-//     <img src="" width="800" height="600">
-// `)
